@@ -16,17 +16,11 @@ const Navbar = ({ cartCount }) => {
           <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to="/products">Our Product</Link>
-        </li>
-        <li>
-          <Link to="/categories">Category</Link>
-        </li>
-        <li>
           <Link to="/contact">Contact Us</Link>
         </li>
         <li>
           <Link to="/cart" className="cart-link">
-            Cart {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+            My Cart {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
           </Link>
         </li>
       </ul>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./cart.css";
 
 const Cart = ({ cartItems, updateCart }) => {
+    const navigate = useNavigate();
   const [cart, setCart] = useState(
     cartItems.map((item) => ({ ...item, quantity: 1, selected: true }))
   );
@@ -79,7 +81,12 @@ const Cart = ({ cartItems, updateCart }) => {
           </ul>
           <div className="cart-summary">
             <h3>Total: €{totalPrice.toFixed(2)}</h3>
-            <button className="checkout-btn">Checkout</button>
+            <button
+              className="checkout-btn"
+              onClick={() => navigate("/payment")}
+            >
+              Proceed to Payment
+            </button>
           </div>
         </div>
       )}
