@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ cartCount }) => {
   return (
     <nav className="navbar">
-      <div className="navbar-logo">BrewTopia Cafe</div>
+      <div className="navbar-logo">
+        <Link to="/">BrewTopia Cafe</Link>
+      </div>
       <ul className="navbar-links">
         <li>
           <Link to="/">Home</Link>
@@ -21,6 +23,11 @@ const Navbar = () => {
         </li>
         <li>
           <Link to="/contact">Contact Us</Link>
+        </li>
+        <li>
+          <Link to="/cart" className="cart-link">
+            Cart {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+          </Link>
         </li>
       </ul>
       <div className="button-container">

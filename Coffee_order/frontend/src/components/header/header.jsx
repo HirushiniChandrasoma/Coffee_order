@@ -1,5 +1,6 @@
 import React from "react";
 import "./header.css";
+import { Link } from "react-router-dom";
 import headerImage from "../../assets/coffee.png"; 
 
 const Header = () => {
@@ -21,7 +22,9 @@ const Header = () => {
           <button className="explore-btn" onClick={scrollToExplore}>
             Explore
           </button>
+          <Link to="/order">
           <button className="order-btn">Order Coffee</button>
+        </Link>
         </div>
       </div>
       <div className="header-image">
