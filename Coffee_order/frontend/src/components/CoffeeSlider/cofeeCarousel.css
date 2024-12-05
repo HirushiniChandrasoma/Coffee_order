@@ -1,0 +1,42 @@
+.coffee-slider-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .coffee-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .coffee-image {
+    width: 100%;
+    max-width: 150px;
+    margin: 0 auto 10px;
+    display: block;
+  }
+  
+  .rating {
+    font-size: 14px;
+    color: #f39c12;
+  }
+  
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #000;
+  }
+  
+  .swiper-pagination-bullet {
+    background: #ddd;
+    opacity: 1;
+  }
+  
+  .swiper-pagination-bullet-active {
+    background: #000;
+  }
+  
