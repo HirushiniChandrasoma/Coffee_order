@@ -42,7 +42,7 @@
     width: calc(33.33% - 10px); /* Three containers in a row with 20px gap */
     margin-left: -75px; /* Overlap effect: initially shift all containers to the left */
     padding: 20px;
-    background-color: rgba(95, 81, 47, 0.771); /* Slight transparency to show the background */
+    background-color: rgba(80, 67, 39, 0.91); /* Slight transparency to show the background */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.348);
     transition: transform 0.5s ease, width 0.5s ease, margin-left 0.5s ease, height 0.5s ease;
@@ -81,8 +81,8 @@
 }
 
 .category-image {
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
     border-radius: 8px;
     object-fit: cover;
 }
@@ -105,20 +105,48 @@
 /* Drink list */
 .drink-list {
     margin-top: 15px;
+    display: flex;
+    flex-direction: column; /* Stack the list items vertically */
+    align-items: center; /* Center the list items horizontally */
+    justify-content: center; /* Center the list items vertically if there's extra space */
 }
 
 .drink-list ul {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
+    width: 100%; /* Ensure the list takes up the full width */
 }
 
 .drink-list li {
     font-size: 16px;
-    color: #fcd36b;
+    color: #efb010;
     margin: 5px 0;
-    align-items: center;
+    text-align: center; /* Center each list item text */
 }
+
+.explore-section {
+    background-color: #f2f76784; 
+    padding: 1px; 
+    border-radius: 4px; 
+  }
+
+/* Styles for Explore Section */
+.explore-title {
+    text-align: center; /* Centers the text */
+    font-weight: bold; /* Makes the text bold */
+  }
+  
+  .explore-description {
+    font-size: 26px;
+    text-align: center;
+    color: brown; /* Changes text color to brown */
+    font-style: italic; /* Makes the text italic */
+  }
+
+  
+  
+
 
 /* Styles for larger screens (optional responsiveness) */
 @media (max-width: 1024px) {

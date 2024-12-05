@@ -2,21 +2,27 @@ import React, { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "./cofeeCarousel.css"; 
-import coffeeImage from "../../assets/coffee.png";
+import Espresso from '../../assets/espresso.png';
+import Brewed from '../../assets/brewed.png';
+import Decaf from '../../assets/decaf.jpg';
+import Hotc from '../../assets/hotc.jpg';
+import P2 from '../../assets/pumpkin.png';
+import Pumpkin from '../../assets/pumpkin.jpg';
+import Special from '../../assets/special.jpg';
+import Tonic from '../../assets/tonic.jpg';
 
 const CoffeeCarousel = () => {
   const swiperRef = useRef(null);  // Create a reference for the Swiper instance
 
   const coffeeData = [
-    { name: 'Americano', description: 'A coffee drink typically made from equal parts espresso...', image: coffeeImage, rating: 4.9 },
-    { name: 'Black Coffee', description: 'Black coffee is a hot coffee beverage simply made...', image: coffeeImage, rating: 4.9 },
-    { name: 'Mocha', description: 'A coffee drink known for its chocolatey sweet, rich flavor...', image: coffeeImage, rating: 4.9 },
-    { name: 'Breve', description: 'Breve is a coffee drink made with equal parts espresso and...', image: coffeeImage, rating: 4.9 },
-    { name: 'Breve', description: 'Breve is a coffee drink made with equal parts espresso and...', image: coffeeImage, rating: 4.9 },
-    { name: 'Breve', description: 'Breve is a coffee drink made with equal parts espresso and...', image: coffeeImage, rating: 4.9 },
-    { name: 'Breve', description: 'Breve is a coffee drink made with equal parts espresso and...', image: coffeeImage, rating: 4.9 },
-    { name: 'Breve', description: 'Breve is a coffee drink made with equal parts espresso and...', image: coffeeImage, rating: 4.9 },
-    { name: 'Breve', description: 'Breve is a coffee drink made with equal parts espresso and...', image: coffeeImage, rating: 4.9 },
+    { name: 'Americano', description: 'A coffee drink typically made from equal parts espresso...', image: Espresso, rating: 4.9 },
+    { name: 'Decaf Drip Coffee', description: 'A coffee drink known for its chocolatey sweet, rich flavor...', image: Decaf, rating: 4.9 },
+    { name: 'Pumpkin Spice Latte', description: 'Breve is a coffee drink made with equal parts espresso and...', image: Pumpkin, rating: 4.9 },
+    { name: 'Coffee Tonic', description: 'Breve is a coffee drink made with equal parts espresso and...', image: Tonic, rating: 4.9 },
+    { name: 'Eggnog Latte', description: 'Breve is a coffee drink made with equal parts espresso and...', image: P2, rating: 4.9 },
+    { name: 'Hot Chocolate', description: 'Breve is a coffee drink made with equal parts espresso and...', image: Hotc, rating: 4.9 },
+    { name: 'Ristretto', description: 'Breve is a coffee drink made with equal parts espresso and...', image: Special, rating: 4.9 },
+    { name: 'Breve', description: 'Breve is a coffee drink made with equal parts espresso and...', image: Brewed, rating: 4.9 },
   ];
 
   useEffect(() => {

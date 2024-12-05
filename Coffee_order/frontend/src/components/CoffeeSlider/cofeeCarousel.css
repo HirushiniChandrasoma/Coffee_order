@@ -1,12 +1,12 @@
 .coffee-slider-container {
     width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    background: #241d01da;
   }
   
   .coffee-card {
-    background: #fff;
+    background: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
@@ -31,12 +31,5 @@
     color: #000;
   }
   
-  .swiper-pagination-bullet {
-    background: #ddd;
-    opacity: 1;
-  }
-  
-  .swiper-pagination-bullet-active {
-    background: #000;
-  }
+
   
