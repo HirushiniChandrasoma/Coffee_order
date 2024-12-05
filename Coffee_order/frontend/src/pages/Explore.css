@@ -1,0 +1,157 @@
+/* General wrapper for background */
+.explore-wrapper {
+    background-image: url('../assets/c2.jpg'), linear-gradient(to right, #000000, #2e210e); 
+    background-size: 40% 100%, 60% 100%; /* Left: image covers 45% width, Right: gradient covers the other 55% */
+    background-position: left center, right center; /* Position image and gradient */
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Ensure the background covers the entire height */
+    display: flex;
+    justify-content: flex-end; /* Align content to the right */
+    align-items: center; /* Center the content vertically */
+    position: relative;
+    overflow: hidden; /* Prevent overflow of the enlarged container */
+}
+
+.explore-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-image: linear-gradient(to right, #000000, #39290f); 
+    filter: blur(10px);
+    z-index: 0;
+}
+
+/* General container styles */
+.explore-container {
+    display: flex;
+    flex-direction: row; /* Align categories in a row */
+    justify-content: flex-end; /* Align to the left */
+    flex-wrap: wrap; /* Allow the items to wrap to the next line */
+    gap: 30px;
+    padding: 10px;
+    max-width: 1200px; /* Limit the container width */
+    position: right;
+    z-index: 1; /* Ensure containers are above the background */
+}
+
+/* Category container styles */
+.category-container {
+    width: calc(33.33% - 10px); /* Three containers in a row with 20px gap */
+    margin-left: -75px; /* Overlap effect: initially shift all containers to the left */
+    padding: 20px;
+    background-color: rgba(95, 81, 47, 0.771); /* Slight transparency to show the background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.348);
+    transition: transform 0.5s ease, width 0.5s ease, margin-left 0.5s ease, height 0.5s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    z-index: 1; /* Ensure the hovered container stays on top */
+}
+
+/* Hover effect: Shift left and show full container */
+.category-container:hover {
+    margin-left: 0; /* Move to its normal position on hover */
+    transform: scale(1.2);
+    margin-left: 20px; /* Ensure space from the left */
+    margin-right: 60px; /* Slightly enlarge */
+    z-index: 2; /* Bring the hovered container to the front */
+}
+
+/* Click effect: Expand container to show details */
+.category-container.expanded {
+    width: 350px; /* Expanded width */
+    margin-left: -100px; /* Move the container slightly left */
+    height: auto;
+    transform: scale(1.5); /* Slightly enlarge the clicked container */
+    z-index: 3; /* Slightly enlarge the clicked container */
+}
+
+/* Category header (name, image, description) */
+.category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.category-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.category-info {
+    flex-grow: 1;
+}
+
+.category-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.category-info p {
+    font-size: 14px;
+    color: #c4c1c1;
+}
+
+/* Drink list */
+.drink-list {
+    margin-top: 15px;
+}
+
+.drink-list ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.drink-list li {
+    font-size: 16px;
+    color: #fcd36b;
+    margin: 5px 0;
+    align-items: center;
+}
+
+/* Styles for larger screens (optional responsiveness) */
+@media (max-width: 1024px) {
+    .category-container {
+        width: calc(33.33% - 20px); /* Slightly smaller containers for medium screens */
+    }
+
+    .category-container.expanded {
+        width: calc(33.33% - 20px); /* Slightly smaller expanded containers for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .explore-container {
+        justify-content: space-around; /* Space out items on smaller screens */
+    }
+
+    .category-container {
+        width: calc(50% - 20px); /* Two containers per row on tablets */
+        margin-left: 0;
+    }
+
+    .category-container.expanded {
+        width: calc(50% - 20px); /* Two containers per row when expanded */
+    }
+}
+
+@media (max-width: 480px) {
+    .category-container {
+        width: calc(100% - 20px); /* One container per row for mobile */
+    }
+
+    .category-container.expanded {
+        width: calc(100% - 20px); /* Full width for expanded containers */
+    }
+}
