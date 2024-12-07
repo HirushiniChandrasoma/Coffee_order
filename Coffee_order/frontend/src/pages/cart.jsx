@@ -1,78 +1,151 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; 
 import "./cart.css";
 
 const Cart = ({ cartItems, updateCart }) => {
-    const navigate = useNavigate();
-  const [cart, setCart] = useState(
-    cartItems.map((item) => ({ ...item, quantity: 1, selected: true }))
-  );
+  const navigate = useNavigate();
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Handle Quantity Increase
-  const increaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+  
+  const token = localStorage.getItem("token");
+
+ 
+  useEffect(() => {
+    if (token) {
+      const fetchCart = async () => {
+        try {
+          const response = await axios.get("http://localhost:3000/api/cart", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setCart(response.data.cart.items);
+          setLoading(false);
+        } catch (error) {
+          setError("Failed to fetch cart data.");
+          setLoading(false);
+        }
+      };
+      fetchCart();
+    } else {
+      setLoading(false);
+      setError("You must be logged in to view the cart.");
+    }
+  }, [token]);
+
+  // Function to add item to cart
+  const addToCart = async (productId, quantity) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/cart/add",
+        { productId, quantity },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCart(response.data.cart.items);
+    } catch (error) {
+      console.error("Error adding item to cart", error);
+    }
   };
 
-  // Handle Quantity Decrease
-  const decreaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
+ 
+  const updateCartItem = async (productId, quantity, selected) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/api/cart/update",
+        { productId, quantity, selected },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCart(response.data.cart.items);
+    } catch (error) {
+      console.error("Error updating item in cart", error);
+    }
+  };
+
+  
+  const removeFromCart = async (productId) => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3000/api/cart/remove",
+        { data: { productId } },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCart(response.data.cart.items);
+    } catch (error) {
+      console.error("Error removing item from cart", error);
+    }
+  };
+
+
+  const increaseQuantity = (id, quantity) => {
+    updateCartItem(id, quantity + 1, true); 
+  };
+
+  
+  const decreaseQuantity = (id, quantity) => {
+    if (quantity > 1) {
+      updateCartItem(id, quantity - 1, true); 
+    }
+  };
+
+  // Handle Select Item
+  const toggleSelect = (id, selected) => {
+    updateCartItem(id, 1, !selected);
   };
 
   // Handle Remove Item
   const removeItem = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-  };
-
-  // Handle Select Item
-  const toggleSelect = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id ? { ...item, selected: !item.selected } : item
-      )
-    );
+    removeFromCart(id); 
   };
 
   // Calculate Total Price
-  const totalPrice = cart
-    .filter((item) => item.selected)
-    .reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="cart-container">
       <h2>Your Shopping Cart</h2>
-      {cart.length === 0 ? (
+      {loading ? (
+        <p>Loading cart...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <div>
           <ul className="cart-list">
             {cart.map((item) => (
-              <li key={item.id} className="cart-item">
+              <li key={item.productId} className="cart-item">
                 <input
                   type="checkbox"
                   checked={item.selected}
-                  onChange={() => toggleSelect(item.id)}
+                  onChange={() => toggleSelect(item.productId, item.selected)}
                 />
-                <img src={item.image} alt={item.name} className="cart-item-image" />
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="cart-item-image"
+                />
                 <span className="cart-item-name">{item.name}</span>
                 <div className="quantity-controls">
-                  <button onClick={() => decreaseQuantity(item.id)}>-</button>
+                  <button
+                    onClick={() => decreaseQuantity(item.productId, item.quantity)}
+                  >
+                    -
+                  </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => increaseQuantity(item.id)}>+</button>
+                  <button
+                    onClick={() => increaseQuantity(item.productId, item.quantity)}
+                  >
+                    +
+                  </button>
                 </div>
-                <span>€{(item.price * item.quantity).toFixed(2)}</span>
+                <span>Rs {(item.price * item.quantity).toFixed(2)}</span>
                 <button
                   className="remove-btn"
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item.productId)}
                 >
                   Remove
                 </button>
@@ -80,7 +153,7 @@ const Cart = ({ cartItems, updateCart }) => {
             ))}
           </ul>
           <div className="cart-summary">
-            <h3>Total: €{totalPrice.toFixed(2)}</h3>
+            <h3>Total: Rs {totalPrice.toFixed(2)}</h3>
             <button
               className="checkout-btn"
               onClick={() => navigate("/payment")}

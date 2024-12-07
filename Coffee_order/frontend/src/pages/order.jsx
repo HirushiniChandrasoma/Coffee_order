@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./order.css";
-import headerImage from "../assets/coffee.png"; // Assuming the image path is correct
+import headerImage from "../assets/coffee.png"; 
 
-// Define product groups dynamically
 const productGroups = [
   {
     title: "Specialty Coffees",
@@ -101,17 +101,41 @@ const productGroups = [
 
 ];
 
-// The `Order` component
 const Order = ({ addToCart }) => {
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  const [searchTerm, setSearchTerm] = useState(""); 
 
-  // Filter products dynamically based on the search input
   const filteredGroups = productGroups.map((group) => ({
     ...group,
     products: group.products.filter((product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     ),
   }));
+
+  const handleAddToCart = async (product) => {
+    const token = localStorage.getItem("token"); 
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/cart/add",
+        { productId: product.id, quantity: 1 }, 
+        {
+          headers: { Authorization: `Bearer ${token}` }, 
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Product added to cart:", response.data.cart);
+        addToCart(response.data.cart); 
+        alert("Product added to cart!"); 
+      } else {
+        console.error("Error adding product to cart");
+        alert("Error adding product to cart.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while adding the product to the cart."); 
+    }
+  };
 
   return (
     <div className="order-container">
@@ -126,19 +150,25 @@ const Order = ({ addToCart }) => {
         />
       </div>
 
-      {/* Render Filtered Product Groups */}
+      {/* Render filtered product groups */}
       {filteredGroups.map(
         (group, index) =>
-          group.products.length > 0 && ( // Render only groups with filtered products
+          group.products.length > 0 && ( 
             <div className="product-group" key={index}>
               <h2>{group.title}</h2>
               <div className="product-grid">
                 {group.products.map((product) => (
                   <div className="product-card" key={product.id}>
-                    <img src={product.image} alt={product.name} className="product-image" />
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="product-image"
+                    />
                     <h3>{product.name}</h3>
-                    <p>Price: €{product.price.toFixed(2)}</p>
-                    <button onClick={() => addToCart(product)}>Add to Cart</button>
+                    <p>Price: Rs {product.price.toFixed(2)}</p>
+                    <button onClick={() => handleAddToCart(product)}>
+                      Add to Cart
+                    </button>
                   </div>
                 ))}
               </div>

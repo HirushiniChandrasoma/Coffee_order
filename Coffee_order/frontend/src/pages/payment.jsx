@@ -16,23 +16,23 @@ const Payment = ({ cartSummary }) => {
       </div>
         <div className="summary-item">
           <span>Subtotal</span>
-          <span>€{subtotal.toFixed(2)}</span>
+          <span>Rs {subtotal.toFixed(2)}</span>
         </div>
         <div className="summary-item">
           <span>Delivery</span>
-          <span>€{delivery.toFixed(2)}</span>
+          <span>Rs{delivery.toFixed(2)}</span>
         </div>
         <div className="summary-item">
           <span>Discount</span>
-          <span>-€{discount.toFixed(2)}</span>
+          <span>-Rs {discount.toFixed(2)}</span>
         </div>
         <div className="summary-item">
           <span>Taxes</span>
-          <span>€{taxes.toFixed(2)}</span>
+          <span>Rs{taxes.toFixed(2)}</span>
         </div>
         <div className="summary-item total">
           <span>Total</span>
-          <span>€{total.toFixed(2)}</span>
+          <span>Rs{total.toFixed(2)}</span>
         </div>
       </div>
 
@@ -42,7 +42,7 @@ const Payment = ({ cartSummary }) => {
         <form className="payment-form">
           <div className="form-group">
             <label htmlFor="card-holder">Card Holder</label>
-            <input type="text" id="card-holder" placeholder="Amanda Jackson" />
+            <input type="text" id="card-holder" placeholder="Your Name" />
           </div>
           <div className="form-group">
             <label htmlFor="card-number">Card Number</label>
