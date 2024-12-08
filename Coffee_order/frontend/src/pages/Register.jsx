@@ -5,17 +5,18 @@ import './login.css';
 
 function Register() {
     const [formData, setFormData] = useState({
-        name: '',
+        full_name: '',
         email: '',
         password: '',
     });
+
     const [errorMessage, setErrorMessage] = useState("");  
     const [loading, setLoading] = useState(false);  
     const navigate = useNavigate();  
 
     // Handle input changes
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target;  // Corrected: use `name` instead of `full_name`
         setFormData({ ...formData, [name]: value });
     };
 
@@ -23,14 +24,15 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setErrorMessage("");  // Reset error message
+        setErrorMessage("");  // Reset error message on new submission
 
         try {
-            const response = await axios.post('http://localhost:3000/api/user/register', formData);
+            // Making API call to register the user
+            const response = await axios.post('http://localhost:3000/api/users/user/signup', formData);
 
             if (response.data.success) {
                 alert('Successfully registered! Please log in to your account.');
-                navigate('/login');  
+                navigate('/login');  // Redirect to login page
             } else {
                 setErrorMessage(response.data.message || 'Error occurred. Please try again.');
             }
@@ -63,9 +65,9 @@ function Register() {
                     <div className="input-field">
                         <input 
                             type="text" 
-                            name="name"
-                            placeholder="Name" 
-                            value={formData.name}
+                            name="full_name"  // Corrected name attribute
+                            placeholder="Full Name" 
+                            value={formData.full_name}
                             onChange={handleChange}
                         />
                     </div>

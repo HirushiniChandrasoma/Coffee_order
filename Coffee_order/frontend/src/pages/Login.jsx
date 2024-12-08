@@ -21,18 +21,19 @@ function Login() {
         setErrorMessage("");  // Reset error message on new submit
 
         try {
-            const response = await axios.post('http://localhost:3000/api/user/login', data);
+            const response = await axios.post('http://localhost:3000/api/users/login', data);
             if (response.data.success) {
                 
+                // Store token in local storage
                 localStorage.setItem('token', response.data.token);
 
-                
-                const userName = response.data.user?.name || "User";
+                // Extract the user's full name from the response, defaulting to "User" if not found
+                const userName = response.data.user?.full_name || "User";
 
-               
+                // Display a welcome alert with the user's name
                 alert(`Login successful! Welcome back, ${userName}.`);
 
-                
+                // Redirect the user to the homepage
                 navigate('/');  
             } else {
                 setErrorMessage(response.data.message || "Login failed. Please try again.");
@@ -44,6 +45,7 @@ function Login() {
             setLoading(false);  
         }
 
+        // Reset the form after submission
         reset();  
     };
 

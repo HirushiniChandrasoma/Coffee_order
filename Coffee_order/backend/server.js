@@ -1,26 +1,28 @@
-import express from "express"
-import cors from "cors"
+import dotenv from 'dotenv'; 
+import express, { json } from "express";
 import { connectDB } from "./config/db.js"
-import userRouter from "./routes/userRoute.js"
-import cartRouter from './routes/cartRoute.js'
-import dotenv from "dotenv";
+import cors from "cors";
+dotenv.config();
+// Routes
+import authRoutes from "./routes/authRoutes.js";
 
-dotenv.config(); 
-
-//app config
-const app = express()
+// express app
+const app = express();
 const port = 3000
 
-//middleware
-app.use(express.json())
-app.use(cors())
+// middleware
+app.use(json());
+
+// cors
+app.use(cors());
+
+// Routes
+app.use("/api/users", authRoutes);
+
 
 //db connection
 connectDB();
 
-//api endpoints
-app.use("/api/user",userRouter);
-app.use('/api/cart', cartRouter);
 
 app.get("/",(req,res)=>{
     res.send("API Working")
@@ -29,3 +31,4 @@ app.get("/",(req,res)=>{
 app.listen(port,()=>{
     console.log(`server started on http://localhost:${port}`)
 })
+
